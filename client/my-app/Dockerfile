@@ -8,6 +8,8 @@ COPY ./yarn.lock ./
 
 RUN npm install
 
+ENV TZ="America/Toronto"
+
 COPY . .
 
 EXPOSE 3000
