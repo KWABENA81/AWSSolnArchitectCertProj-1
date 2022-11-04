@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  server:
+    build: ./server
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server:/app
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+    environment:
+      FLASK_ENV: development
+    restart: "unless-stopped"
+
+  web:
+    build: ./client/my-app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client/my-app:/user/src/app
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+    depends_on:
+      - server
+    restart: "unless-stopped"
+
