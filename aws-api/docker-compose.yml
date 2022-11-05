@@ -10,13 +10,13 @@ services:
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
     depends_on:
-      - db
+      - postgresdb
     volumes:
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
   
-  db:
-    container_name: db
+  postgresdb:
+    container_name: postgresdb
     image: postgres:12
     ports:
       - "5432:5432"
