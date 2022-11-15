@@ -2,19 +2,19 @@ version: '3.8'
 
 services:
   postgres:
-    container_name: postgres
+    container_name: postgres_container
     image: postgres
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-      # POSTGRES_DB: mservice_db
+      POSTGRES_DB: data_db
       PGDATA: /data/postgres
     volumes:
-      #- postgres:/data/postgres
+      - postgres-data:/data/postgres
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
     ports:
-      - "5432:5432"
+      - "6543:5432"
     restart: unless-stopped
 
   pgadmin:
@@ -22,7 +22,7 @@ services:
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: root
+      PGADMIN_DEFAULT_PASSWORD: admin
     volumes:
       #- pgadmin:/var/lib/pgadmin
       - "/etc/timezone:/etc/timezone:ro"
@@ -30,4 +30,15 @@ services:
     ports:
       - "5050:80"
     restart: unless-stopped
+    depends_on:
+      - postgres
+
+networks:
+  default:
+  external:
+    name: postgres_default
+
+volumes:
+  postgres-data:
+
 
