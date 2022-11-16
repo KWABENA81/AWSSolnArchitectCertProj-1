@@ -4,9 +4,8 @@ import psycopg2
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 
-app = Flask(__name__)
-# app.config.from_pyfile('config.py')
-app.config.from_object('config.Config')
+application = Flask(__name__)
+application.config.from_object('config.Config')
 
 
 def get_db_connection():
@@ -18,9 +17,8 @@ def get_db_connection():
     return conn
 
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('postgresql://postgres:password@172.21.0.2/data_db')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password@172.21.0.2/data_db'
-db = SQLAlchemy(app)
+application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password@172.21.0.2/data_db'
+db = SQLAlchemy(application)
 
 
 class students(db.Model):
@@ -38,7 +36,7 @@ def __init__(self, name, city, addr, pin):
     self.pin = pin
 
 
-@app.route('/')
+@application.route('/')
 def index():
     conn = get_db_connection()
     cur = conn.cursor()
@@ -49,7 +47,7 @@ def index():
     return render_template('index.html', students=students)
 
 
-@app.route('/create/', methods=['GET', 'POST'])
+@application.route('/create/', methods=['GET', 'POST'])
 def create():
     if request.method == 'POST':
         name = request.form['name']
@@ -69,7 +67,7 @@ def create():
         cur = conn.cursor()
         cur.execute('INSERT INTO students (name, city, addr, pin)'
                     ' VALUES (%s, %s, %s, %s)',
-                    (name.upper(), city.upper(), addr.upper(), pin.upper()))
+                    (name.capitalize(), city.capitalize(), addr.upcapitalizeper(), pin.capitalize()))
         conn.commit()
         cur.close()
         conn.close()
@@ -80,4 +78,4 @@ def create():
 
 if __name__ == '__main__':
     #   db.create_all()
-    app.run(debug=True)
+    application.run(debug=True)
