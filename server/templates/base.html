@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}- FlaskApp</title>
+    <style>
+        nav a {
+            color: #d64161;
+            font-size: 1em;
+            margin-left: 10px;
+            text-decoration: none;
+        }
+
+        table, th, td {
+            border: 1px solid;
+
+         }
+        table {
+             border-collapse: collapse;
+             width: 65%;
+            }
+
+        .student {
+            padding: 5px;
+            margin: 5px;
+            background-color: #f7f4f4;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="{{ url_for('index') }}">FlaskApp</a>
+    <a href="{{ url_for('create') }}">Register Student</a>
+    <a href="#">About</a>
+</nav>
+<hr>
+<div class="content">
+    {% block content %} {% endblock %}
+</div>
+</body>
+</html>
