@@ -1,22 +1,8 @@
-docker ps -a
-CONTAINER ID   IMAGE            COMMAND                  CREATED       STATUS          PORTS                                            NAMES
-4f8163dacb4e   dpage/pgadmin4   "/entrypoint.sh"         4 hours ago   Up 19 minutes   443/tcp, 0.0.0.0:5050->80/tcp, :::5050->80/tcp   pgadmin_container
-7e875c850121   postgres         "docker-entrypoint.s…"   4 hours ago   Up 19 minutes   0.0.0.0:5432->5432/tcp, :::5432->5432/tcp        postgres_container
 
-#
-docker inspect $( echo $( docker ps -a | grep dpage/pgadmin4)  | awk '{print $1}') | grep IPAddress
-            "SecondaryIPAddresses": null,
-            "IPAddress": "",
-                    "IPAddress": "172.28.0.2",
-
-#
 docker inspect $( echo $( docker ps -a | grep postgres)  | awk '{print $1}') | grep IPAddress
             "SecondaryIPAddresses": null,
             "IPAddress": "",
                     "IPAddress": "172.28.0.3",
 
-                    ------------------------------------------------------------------
-
 docker rmi `docker images -q`
-
 docker rm `docker ps -aq`
